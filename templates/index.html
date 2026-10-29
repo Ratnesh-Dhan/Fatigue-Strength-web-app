@@ -1,0 +1,64 @@
+{% extends "base.html" %} {% block title %}Predict fatigue strength{% endblock
+%} {% block content %}
+<section class="hero">
+  <div class="eyebrow">MATERIAL PROPERTY ESTIMATION</div>
+  <h1>Predict fatigue strength.</h1>
+  <p class="hero-copy">
+    Enter the 25 numeric features used by the trained model. Use the same units
+    and value scales as the training dataset.
+  </p>
+  <div class="status-row">
+    <span class="status-dot {{ 'ready' if model_ready else 'missing' }}"></span>
+    <span
+      >{{ 'Model loaded and ready' if model_ready else 'Model not loaded'
+      }}</span
+    >
+  </div>
+  {% if not model_ready and model_error %}
+  <div class="setup-note">
+    <strong>Setup needed:</strong> {{ model_error }} Also place
+    fatigue_strength_metadata.json in the same model/ directory.
+  </div>
+  {% endif %}
+</section>
+
+<form class="predict-form" method="post" action="{{ url_for('predict') }}">
+  <div class="section-heading">
+    <div>
+      <h2>Steel features</h2>
+      <p>All fields are required. Enter numeric values only.</p>
+    </div>
+    <span class="feature-count">{{ features|length }} inputs</span>
+  </div>
+
+  {% for group in feature_groups %}
+  <section class="feature-group">
+    <div class="group-heading">{{ group.title }}</div>
+    <div class="field-grid">
+      {% for feature in group.features %}
+      <label class="field" for="{{ feature }}">
+        <span class="field-label">{{ feature }}</span>
+        <input
+          id="{{ feature }}"
+          name="{{ feature }}"
+          type="number"
+          step="any"
+          inputmode="decimal"
+          placeholder="Enter {{ feature }}"
+          value="{{ form_values.get(feature, '') if form_values else '' }}"
+          required
+        />
+      </label>
+      {% endfor %}
+    </div>
+  </section>
+  {% endfor %}
+
+  <div class="form-actions">
+    <p>Inputs are passed to the model in its training feature order.</p>
+    <button type="submit" {% if not model_ready %}disabled{% endif %}>
+      Predict fatigue strength <span aria-hidden="true">→</span>
+    </button>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block title %}Prediction result{% endblock %} {%
+block content %}
+<section class="result-hero">
+  <div class="eyebrow">PREDICTION COMPLETE</div>
+  <h1>Predicted {{ target }}</h1>
+  <div class="prediction-value">{{ "%.6g"|format(prediction) }}</div>
+  <p class="result-note">The predicted Fatigue Strength is in MPa.</p>
+  <div class="result-actions">
+    <a class="button-link" href="{{ url_for('index') }}">← New prediction</a>
+  </div>
+</section>
+
+<section class="results-card">
+  <div class="section-heading">
+    <div>
+      <h2>Input summary</h2>
+      <p>Values used for this prediction.</p>
+    </div>
+    <span class="feature-count">{{ inputs|length }} features</span>
+  </div>
+  <div class="input-summary">
+    {% for feature in features %}
+    <div class="summary-item">
+      <span>{{ feature }}</span><strong>{{ inputs[feature] }}</strong>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
