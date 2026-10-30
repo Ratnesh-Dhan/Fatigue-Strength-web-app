@@ -55,7 +55,7 @@ DEFAULT_INPUT_VALUES = {
 FEATURE_GROUPS = [
     ("Heat-treatment and processing features", ["NT", "THT", "THt", "THQCr", "CT", "Ct", "DT", "Dt", "QmT", "TT", "Tt", "TCr"]),
     ("Chemical composition", ["C", "Si", "Mn", "P", "S", "Ni", "Cr", "Cu", "Mo"]),
-    ("Additional features", ["RedRatio", "dA", "dB", "dC"]),
+    ("Processing and inclusion descriptors", ["RedRatio", "dA", "dB", "dC"]),
 ]
 
 app = Flask(__name__)

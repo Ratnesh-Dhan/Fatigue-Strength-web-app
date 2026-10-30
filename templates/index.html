@@ -2,10 +2,16 @@
 %} {% block content %}
 <section class="hero">
   <div class="eyebrow">MATERIAL PROPERTY ESTIMATION</div>
-  <h1>Predict fatigue strength.</h1>
+  <h1>Steel Fatigue Strength Predictor</h1>
   <p class="hero-copy">
-    Enter the 25 numeric features used by the trained model. Use the same units
-    and value scales as the training dataset.
+    Estimate the rotating-bending fatigue strength of steel at 107 cycles using
+    chemical composition, heat-treatment conditions, and processing descriptors.
+  </p>
+  <br />
+  <p class="hero-copy">
+    Enter the required material and processing information using the units and
+    definitions provided below. The prediction is generated using the trained
+    XGBoost model developed from the NIMS steel-fatigue dataset.
   </p>
   <div class="status-row">
     <span class="status-dot {{ 'ready' if model_ready else 'missing' }}"></span>
@@ -25,8 +31,11 @@
 <form class="predict-form" method="post" action="{{ url_for('predict') }}">
   <div class="section-heading">
     <div>
-      <h2>Steel features</h2>
-      <p>All fields are required. Enter numeric values only.</p>
+      <h2>Material and Processing Inputs</h2>
+      <p>
+        Provide the 25 input variables used by the trained model. All fields are
+        required.
+      </p>
     </div>
     <span class="feature-count">{{ features|length }} inputs</span>
   </div>
